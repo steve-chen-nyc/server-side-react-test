@@ -1,10 +1,11 @@
-const express = require("express");
-const expressReactViews = require("express-react-views");
+import express from "express";
+import expressReactViews from "express-react-views";
 import models, { sequelize } from "./models";
+import { index, user, foo } from "./routes";
+import api from "./routes/api";
+import path from "path";
+
 const app = express();
-const routes = require("./routes");
-const api = require("./routes/api");
-const path = require("path");
 
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "jsx");
@@ -14,9 +15,9 @@ app.use(express.static("public"));
 app.use(express.static("dist"));
 app.use("/api", api);
 
-app.get("/", routes.index);
-app.get("/user/:id", routes.user);
-app.get("/foo", routes.foo);
+app.get("/", index);
+app.get("/users/:id", user);
+app.get("/foo", foo);
 
 const eraseDatabaseOnSync = true;
 
