@@ -1,6 +1,5 @@
 import express from "express";
 import expressReactViews from "express-react-views";
-import models, { sequelize } from "./models";
 import { index, user, foo } from "./routes";
 import api from "./routes/api";
 import path from "path";
@@ -19,23 +18,4 @@ app.get("/", index);
 app.get("/users/:id", user);
 app.get("/foo", foo);
 
-const eraseDatabaseOnSync = true;
-
-sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-  if (eraseDatabaseOnSync) {
-    createUsers();
-  }
-  app.listen("3000", () => {
-    console.log("listening on port 3000");
-  });
-});
-
-const createUsers = async () => {
-  await models.User.create({
-    username: "schen"
-  });
-
-  await models.User.create({
-    username: "totoro"
-  });
-};
+export default app;
